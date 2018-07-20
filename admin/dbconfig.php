@@ -3,9 +3,9 @@ class Database
 {
     
     private $host = "localhost";
-    private $db_name = "mywezvus_tattoo";
-    private $username = "mywezvus_tattoo";
-    private $password = "Tata#123";
+    private $db_name = "";
+    private $username = "";
+    private $password = "";
     public $conn;
 
     public function dbConnection()

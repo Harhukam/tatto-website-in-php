@@ -1,9 +1,9 @@
 <?php
 
  $DB_HOST = 'localhost';
- $DB_USER = 'mywezvus_tattoo';
- $DB_PASS = 'Tata#123';
- $DB_NAME = 'mywezvus_tattoo';
+ $DB_USER = '';
+ $DB_PASS = '';
+ $DB_NAME = '';
 
 
 
