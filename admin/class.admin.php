@@ -47,29 +47,6 @@ echo $ex->getMessage();
 }
 
 
-
-
-// public function sendmsg()
-// {
-// $message = “This is test”;
-// $message = urlencode($message);
-// $ch=curl_init();
-// curl_setopt($ch,CURLOPT_URL,"https://smsapi.24x7sms.com/api_2.0/SendSMS.aspx?APIKEY=TyDqvfH3JI4&MobileNo=+919463710716&SenderID=MYWEBD&Message=”.$message.”&ServiceName=otp);
-
-// curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-// $output =curl_exec($ch);
-// curl_close($ch);
-
-// }
-
-
-
-
-
-
-
-
-
 public function login($email,$upass)
 {
 try
@@ -147,10 +124,10 @@ $mail->SMTPSecure = "ssl";
 $mail->Host       = "smtp.gmail.com";      
 $mail->Port       = 465;             
 $mail->AddAddress($email);
-$mail->Username="reborysgh@gmail.com";  
-$mail->Password="Tata#123";            
-$mail->SetFrom('reborysgh@gmail.com','HappySingh');
-$mail->AddReplyTo("reborysgh@gmail.com","happy");
+$mail->Username="xxx@gmail.com";  
+$mail->Password="password";            
+$mail->SetFrom('xxxx@gmail.com','your name');
+$mail->AddReplyTo("xxxx@gmail.com","name");
 $mail->Subject    = $subject;
 $mail->MsgHTML($message);
 $mail->Send();
