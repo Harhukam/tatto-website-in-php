@@ -1,0 +1,335 @@
+<?php
+session_start();
+require_once 'class.admin.php';
+$user_services = new ADMIN();
+
+if(!$user_services->is_logged_in())
+{
+$user_services->redirect('index.php');
+}
+
+$stmt = $user_services->runQuery("SELECT * FROM  tbl_admin WHERE adminID =:uid");
+$stmt->execute(array(":uid"=>$_SESSION['adminSession']));
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if(isset($_GET['uptkey']) && !empty($_GET['uptkey'])) 
+{
+$uptid = $_GET['uptkey'];
+$stmt = $user_services->runQuery('SELECT * FROM services WHERE services_id =:pid');
+$stmt->execute(array(':pid'=>$uptid));
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+extract($result);
+}
+
+if(isset($_GET['delkey']))
+{
+$id = base64_decode(urldecode($_GET['delkey']));//encryption
+$stmt = $user_services->runQuery('DELETE FROM services WHERE services_id =:bid');
+$stmt->execute(array(':bid'=>$id));
+header('location: update-services.php');
+}
+
+
+error_reporting( ~E_NOTICE );
+
+
+
+
+
+
+
+if(isset($_POST['save']))
+{
+
+$services_post_heading = $_POST['sheading'];
+$services_post_text= $_POST['stext'];
+
+$services_post_photo = $_FILES['sphoto']['name'];
+$tmp_dir = $_FILES['sphoto']['tmp_name'];
+$imgSize = $_FILES['sphoto']['size'];  
+
+if(empty($services_post_photo)){
+$errMSG = "please select photo";
+}
+else
+{
+$upload_dir = '../images/'; // upload directory
+$imgExt = strtolower(pathinfo($services_post_photo,PATHINFO_EXTENSION)); // get image extension
+$valid_extensions = array("jpg","jpeg","gif", "png","svg","ico","icon"); // valid extensions //audio/mp3
+$services_post_photo = rand(1000,1000000).".".$imgExt;
+if(in_array($imgExt, $valid_extensions))
+{  
+if($imgSize < 5000000000)  // Check file size '5MB'
+{
+
+move_uploaded_file($tmp_dir,$upload_dir.$services_post_photo);
+// print_r ( $tmp_dir.$upload_dir.$pagepic);
+
+}
+else{
+$errMSG = "Sorry, your file is too large.";
+}
+}
+else
+{
+$errMSG = "Sorry, this file type not allow to upload";        
+}
+}
+
+if(!isset($errMSG))
+{
+$stmt = $user_services->runQuery("INSERT INTO services(services_post_photo,services_post_heading,services_post_text) VALUES(:b1,:b2,:b3)");
+///$stmt->bindParam(':',$);
+$stmt->bindParam(':b1',$services_post_photo);
+$stmt->bindParam(':b2',$services_post_heading);
+$stmt->bindParam(':b3',$services_post_text);
+if($stmt->execute())
+{
+$successMSG = "Post Successfully";
+header('refresh:1; update-services.php');
+}
+else
+{
+$errMSG = "error something wrong ! please try later...";
+}
+}
+} 
+
+
+
+
+if(isset($_POST['update']))
+{
+	    $services_post_heading = $_POST['sheading'];
+	    $services_post_text = $_POST['stext'];
+	    
+	    $services_post_photo = $_FILES['sphoto']['name'];
+	    $tmp_dir = $_FILES['sphoto']['tmp_name'];
+	    $imgSize = $_FILES['sphoto']['size']; 
+
+		if($services_post_photo)
+		{
+		$upload_dir = '../images/'; 
+		$imgExt = strtolower(pathinfo($services_post_photo,PATHINFO_EXTENSION)); 
+		$valid_extensions = array('jpeg', 'jpg', 'png', 'gif'); 
+		$services_post_photo = rand(1000,1000000).".".$imgExt;
+		if(in_array($imgExt, $valid_extensions)){           
+		if($imgSize < 5000000)              {
+		move_uploaded_file($tmp_dir,$upload_dir.$services_post_photo);
+		}
+		else
+		{
+		$errMSG = "Sorry, your file is too large it should be less then 5MB";
+		}
+		}
+		else
+		{
+		$errMSG = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";        
+		}   
+		}
+		else
+		{
+		$services_post_photo = $result['services_post_photo']; 
+		}  
+        if(!isset($errMSG))
+        {
+        $stmt = $user_services->runQuery("UPDATE services SET services_post_photo=:a1,services_post_heading=:a2,services_post_text=:a3 WHERE services_id=:pid");
+        $stmt->bindParam(':a1',$services_post_photo);
+		$stmt->bindParam(':a2',$services_post_heading);
+		$stmt->bindParam(':a3',$services_post_text);
+		$stmt->bindParam(':pid',$uptid);
+		if($stmt->execute())
+		{
+		$successMSG = "update Successfully";
+		header('refresh:1;  update-services.php');
+		}
+		else
+		{
+		$errMSG = "error something wrong ! please try later...";
+		}
+		}
+}
+
+
+?>
+<?php include_once'include/header.php'; ?>
+<div class="page-content">
+
+<div class="row">
+<div class="col-lg-12">
+<div class="page-title">
+<ol class="breadcrumb">
+<li><i class="fa fa-dashboard"></i>  <a href="#">Dashboard</a>
+</li>
+<li class="active">Services</li>
+</ol>
+</div>
+</div>
+<!-- /.col-lg-12 -->
+</div><!-- /.row -->
+
+
+
+
+
+
+
+
+<div class="row">
+<!-- begin LEFT COLUMN -->
+<div class="col-lg-12">
+<?php
+if(isset($errMSG))
+{
+?>
+<div class="alert alert-danger">
+<span class="glyphicon glyphicon-info-sign"></span> <strong><?php echo $errMSG; ?></strong>
+</div>
+<?php
+}
+else if(isset($successMSG))
+{
+?>
+<div class="alert alert-success">
+<strong><span class="glyphicon glyphicon-info-sign"></span> <?php echo $successMSG; ?></strong>
+</div>
+<?php
+}
+?> 
+
+<div class="portlet portlet-default">
+<div class="portlet-heading">
+<div class="portlet-title">
+<h4>Slider's</h4>
+</div>
+<div class="portlet-widgets">
+<a data-toggle="collapse" data-parent="#accordion" href="#basicFormExample"><i class="fa fa-chevron-down"></i></a>
+</div>
+<div class="clearfix"></div>
+</div>
+<div id="basicFormExample" class="panel-collapse collapse in">
+<div class="portlet-body">
+
+
+<!-- ******************** add or update services downside code ***************** -->
+
+
+<div class="row">
+
+<div class="col-sm-3 shedow">
+
+<form method="post" enctype="multipart/form-data">
+<h4> <b>Add Services here</b> </h4>
+<hr>
+<div class="form-group">
+<img id="blah" src="#" alt="hello"   style=" max-width: 280px; max-height: 180px;"  /> 
+<br/>
+<label>Choose Image </label>
+<input type="file" class="form-control input-sm" name="sphoto" id="imgInp" accept="image/*" />
+</div>
+
+<div class="form-group">
+<label >Service title</label>
+<textarea type="text" class="form-control input-sm" name="sheading" required="required" maxlength="60"></textarea>
+</div>
+
+<div class="form-group">
+<label >Service text</label>
+<textarea type="text" class="form-control input-sm" name="stext" required="required" maxlength="300"></textarea>
+</div>
+
+<hr>
+<input  type="submit" class="btn btn-default btn-sm" name="save" value="Save">
+</form>
+
+
+</div> <!-- col-3 first-->
+
+ <div class="col-sm-3 shedow">
+<form method="post" enctype="multipart/form-data">
+<h4> <b>Update Service here</b> </h4>
+<hr>
+<div class="form-group">
+<img id="blah1" src="../images/<?php echo $result[services_post_photo];?>" alt="." onerror="this.style.display='none'" style=" max-width: 180px; max-height: 120px;" /> 
+<br/>
+<label>Choose Image </label>
+<input type="file" class="form-control input-sm" name="sphoto" id="imgInp1" accept="image/*" />
+</div>
+
+<div class="form-group">
+<label >Service title</label>
+<textarea type="text" class="form-control input-sm" name="sheading" required="required" maxlength="60"><?php echo $result[services_post_heading];?></textarea>
+</div>
+
+<div class="form-group">
+<label >Service text</label>
+<textarea type="text" class="form-control input-sm" name="stext" required="required" maxlength="300"><?php echo $result[services_post_text];?></textarea>
+</div>
+
+<hr>
+<input  type="submit" class="btn btn-default btn-sm " name="update" value="Update">
+</form>
+</div> <!-- col-3 second-->
+
+
+
+<div class="col-sm-5 shedow">
+<h4> <b>All Services</b> </h4>
+<hr>
+
+<?php
+$stmt = $user_services->runQuery("SELECT * FROM services ORDER BY services_id DESC");
+$stmt->execute();
+if($stmt->rowCount() > 0)
+{
+while($result=$stmt->fetch(PDO::FETCH_ASSOC))
+{
+extract($result);
+$key = urlencode(base64_encode($result[services_id]));
+?>
+<div class="well well-danger">
+<img src="../images/<?php echo $result[services_post_photo];?>" onerror="this.style.display='none'" class="img img-responsive" style="max-height: 120px;">
+<hr>
+<b>service title : </b>
+ <span style="font-weight: bold; color: orange;"><?php echo $result[services_post_heading];?></span> 
+</p>
+
+<b>service text : </b>
+ <span style="font-weight: bold; color: orange;"><?php echo $result[services_post_text];?></span> 
+</p>
+
+<hr>
+<div>
+ <a class="btn btn-xs btn-info" href="update-services.php?uptkey=<?php echo $result[services_id]; ?>"><span class="glyphicon glyphicon-edit"></span> edit </a> 
+
+<a class="btn btn-xs btn-warning" href="update-services.php?delkey=<?php echo $key; ?>" title="click for delete" onclick="return confirm('sure to delete ?')"><span class="glyphicon glyphicon-trash"></span> delete</a>
+</div>
+</div><!-- panel -->
+<?php
+}
+}
+else
+{
+?>
+<span style="color: red;" class="glyphicon glyphicon-info-sign"></span> &nbsp; No record inserted
+<?php
+}  
+?>
+
+
+</div> <!-- row internal -->
+</div>
+</div>
+</div>
+
+</div> <!-- row end -->
+
+
+
+
+
+
+</div> <!-- /.page-content -->
+
+
+<?php include_once'include/footer.php'; ?>

@@ -1,0 +1,255 @@
+/* lg */ 
+@media (min-width: 1400px) {
+	
+}
+
+/* md */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+	.tr-list-menu li i {
+		right: 30px;
+	}
+	.tr-list-menu li:hover i {
+		right: 20px;
+	}	
+	.home-content h1 {
+		font-size: 60px;
+	}
+	.typography .icons {
+		text-align: center;
+	}	
+
+}
+
+/* sm */
+@media (min-width: 768px) and (max-width: 991px) {
+
+	.tr-blog .right-content {
+		padding: 0 30px;
+	}
+	.left-content .tr-post {
+		padding: 40px 30px;
+	}
+	.tr-pricing .btn.btn-primary {
+		padding: 15px 25px;
+	}
+	.tr-list-menu li i {
+		right: 30px;
+	}
+	.tr-list-menu li:hover i {
+		right: 20px;
+	}
+	.home-content h1 {
+		font-size: 48px;
+		line-height: 55px;
+	}
+	.portfolio-details .section-title h1 {
+		font-size: 36px;
+	}
+	.about-content .right-contant {
+		padding-left: 15px;
+	}
+	.tr-page .portfolio-item h2 {
+		font-size: 22px;
+	}
+	.entry-header {
+		margin-bottom: 20px;
+	}
+	.typography .button li + li {
+		margin-left: 0;
+	}
+	.typography .icons {
+		text-align: center;
+	}	
+	
+}
+
+
+/* xs */
+@media (max-width: 767px) {
+	
+	.left-content .tr-post {
+		padding: 25px;
+		margin: 0 0 40px;
+	}
+	.tr-after::before {
+		width: 100%;
+	}
+	.category {
+		margin-bottom: 10px;
+	}
+	.tr-blog .right-content {
+		padding:0 15px;
+	}
+	.section-info h2 {
+		font-size: 24px;
+	}
+	.tr-homepage .title h1 {
+		font-size: 18px;
+	}
+	.slick-prev {
+		left: -15px;
+	}
+	.slick-next {
+		right: -15px;
+	}
+	.price {
+		margin-bottom: 15px;
+	}
+	.price h3 {
+		font-size: 50px;
+	}	
+	.section-title h1 {
+		font-size: 26px;
+	}
+	.tr-about .right-contant li {
+		width: 100%;
+	}
+	.left-contant-before::before {
+		display: none;
+	}
+	.entry-header {
+		margin-bottom: 20px;
+	}
+	.page-title {
+		margin-top: 15px;
+	}
+	.home-content h1 {
+		font-size: 45px;
+		line-height: 55px;
+		margin-bottom: 30px;
+	}
+	.item-grid-2 h1 {
+		margin-bottom: 0;
+	}
+	.item-grid-2 h2 {
+		margin-bottom: 30px;
+		font-size: 16px;
+	}
+	.home-content > span.bg-color {
+		font-size: 16px;
+	}
+	.home-content .btn.btn-primary {
+		font-size: 14px;
+	}
+	.btn.btn-primary {
+		padding: 15px 25px;
+		font-size: 14px;
+	}
+	.slider-image{
+		display: none;
+	}
+	.home-content {
+		padding: 50px 0;
+	}
+	.item-grid-2 .home-content {
+		margin-top: 0;
+	}
+	.tr-image {
+		position: static;
+		width: 100%;
+		margin-bottom: 30px;
+	}
+	.portfolio-details .section-title h1 {
+		font-size: 26px;
+	}
+	.tr-feed {
+		top: 15px;
+		right: 15px;
+	}
+	.service {
+		margin-bottom: 30px;
+		max-width: 100%;
+	}
+	.section-padding {
+		padding: 60px 0;
+	}
+	.form-control {
+		margin-bottom: 0;
+	}
+	.tr-logo {
+		margin-bottom: 20px;
+	}
+	.footer-logo img,
+	.tr-logo img {
+		width: 60%;
+	}
+	.service h3 {
+		font-size: 18px;
+		margin: 25px 0 10px;
+	}
+	.service-content .btn.btn-default {
+		margin-top: 10px;
+	}
+	.portfolio-item h2 {
+		font-size: 18px;
+	}
+	.testimonial {
+		margin-bottom: 30px;
+	}	
+	.page-title h1 {
+		font-size: 26px;
+	}
+	.tr-page .tr-main-wrapper {
+		padding-bottom: 50px;
+	}
+	.tr-page .tr-button {
+		margin-top: 50px;
+	}
+	.tr-page.tr-details-page .tr-right-content {
+		margin: 0 0 50px;
+		padding: 0 15px;
+	}
+	.portfolio-details .section-title h1 {
+		margin-bottom: 20px;
+	}
+	.post-content blockquote {
+		font-size: 16px;
+		line-height: 22px;
+		margin: 20px 0;
+	}
+	.tr-page .section-title h1 {
+		font-size: 20px;
+	}
+	#gmap {
+		height: 280px;
+		margin-bottom: 40px;
+	}
+	.contact-content address {
+		margin-top: 0;
+	}
+	.typography h1 {
+		font-size: 50px;
+	}
+	.typography .button li + li {
+		margin-left: 0;
+	}
+	.typography .icons {
+		text-align: center;
+	}
+	.typography h1 {
+		margin-bottom: 30px;
+	}
+	.tr-feed a {
+		font-size: 18px;
+	}
+	.tr-feed li {
+		font-size: 14px;
+	}
+}
+
+/* XS Portrait */
+@media (max-width: 479px) {
+
+	.portfolio-info {
+		padding: 40px;
+	}
+	.tr-about .right-contant li {
+		width: 100%;
+	}
+
+
+
+
+}
+
